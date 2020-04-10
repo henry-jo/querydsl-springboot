@@ -33,7 +33,22 @@ class UserRepositoryTests {
         val result = userRepositorySupport.findAllByName(name)
 
         // then
-        assertEquals(result.size, 1)
-        assertEquals(result[0].age, 20)
+        assertEquals(result.last().age, 20)
+    }
+
+    @Test
+    fun querydsl_custom_test() {
+        // given
+        val name = "henry"
+        val age = 20
+        userRepository.save(User(name = name, age = age))
+
+        // when
+        // 기본 userRepository로 조회
+        // userRepository에서 JPA Repository, QueryDSL Repository 둘다 상속받고 있기 때문에 가능.
+        val result = userRepository.findAllByName(name)
+
+        // then
+        assertEquals(result.last().age, 20)
     }
 }
